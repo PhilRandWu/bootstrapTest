@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+            .container-fluid .row div {
+                height: 100px;
+                background-color: antiquewhite;
+            }
+            img {
+                height: 400px;
+            }
+        </style>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col"></div>
+                <div class="col"></div>
+            </div>
+        </div>
+        <div id="my-carousel" class="carousel">
+            <ol class="carousel-indicators">
+                <li class="active"></li>
+                <li></li>
+                <li></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="../../assets/images/1.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>First slide label</h5>
+                      <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-interval="100">
+                    <img src="../../assets/images/2.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>Second slide label</h5>
+                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                  </div>
+                  <div class="carousel-item" data-interval="200">
+                    <img src="../../assets/images/3.jpg" class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                      <h5>Third slide label</h5>
+                      <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+                    </div>
+                  </div>
+            </div>
+            <a class="carousel-control-prev" href="javascript:void(0)" role="button">
+                <span class="carousel-control-prev-icon"></span>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="carousel-control-next" href="javascript:void(0)" role="button">
+                <span class="carousel-control-next-icon"></span>
+                <span class="sr-only">Next</span>
+              </a>
+        </div>
+        <div class="Btn">
+            <button class="start btn btn-primary">开始</button>
+            <button class="end btn btn-warning">暂停</button>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script>
+            var carousel = {
+                doms: {
+                    prevBtn: $('.carousel-control-prev'),
+                    nextBtn: $('.carousel-control-next'),
+                    indicators: $('.carousel-indicators li'),
+                    startBtn: $('.Btn .start'),
+                    endBtn: $('.Btn .end')
+                },
+                event: {
+                    start: function () {
+                        $('.carousel').carousel({
+                            interval: 1000
+                        })
+                        console.log('开始了');
+                    },
+                    end: function () {
+                        $('.carousel').carousel('pause')
+                    },
+                    prev: function () {
+                        $('.carousel').carousel('prev')
+                    },
+                    next: function () {
+                        $('.carousel').carousel('next')
+                    },
+                    scroll: function (number) {
+                        $('.carousel').carousel(number)
+                    }
+                }
+                
+                
+            }
+            carousel.doms.startBtn.click(function () {
+                carousel.event.start();
+            })
+            carousel.doms.endBtn.click(function () {
+                carousel.event.end();
+            })
+            carousel.doms.prevBtn.click(function () {
+                carousel.event.prev();
+            })
+            carousel.doms.nextBtn.click(function () {
+                carousel.event.next();
+            })
+            carousel.doms.indicators.each(function (index,elem) {
+                // 此处的 elem 为 Dom 对象，是获取的 JQ 对象中的一个，所以不能使用 JQ 的方法
+                elem.addEventListener('click',function () {
+                    carousel.event.scroll(index);
+                })
+            })
+            // 滑动前触发
+            $('.carousel').on('slide.bs.carousel', function (e) {
+                // do something…
+                console.log(
+                    e.direction,
+                    e.relatedTarget,
+                    e.from,
+                    e.to
+                )
+            })
+            // 滑动完成触发
+            // 滑动前触发
+            $('.carousel').on('slid.bs.carousel', function (e) {
+                // do something…
+                console.log(
+                    e.direction,
+                    e.relatedTarget,
+                    e.from,
+                    e.to
+                )
+            })
+        </script>
+    </body>
+</html>
